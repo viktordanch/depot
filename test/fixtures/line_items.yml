@@ -7,3 +7,8 @@ one:
 two:
   product_id: 1
   cart_id: 1
+
+line_item:
+  product_id: 1
+  cart_id: 1
+  quantity: 2

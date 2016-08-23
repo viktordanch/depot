@@ -48,4 +48,21 @@ class CartsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to store_url
   end
+
+  test "should destroy cart via ajax" do
+    # assert_difference('LineItem.count') do
+    #   post line_items_url, params: { product_id: products(:ruby).id }, xhr: true
+    # end
+    post line_items_url, params: { product_id: products(:ruby).id }
+    @cart = Cart.find(session[:cart_id])
+
+    assert_difference('Cart.count', -1) do
+      delete cart_url(@cart), xhr: true
+    end
+
+    assert_response :success
+    assert_select_jquery :html, '#cart' do
+      assert_select 'tr#current_item', 0
+    end
+  end
 end
